@@ -1,0 +1,36 @@
+Prac 3 Morphological Analysis
+
+!pip install morfessor
+!pip install pycld2
+!pip install pyicu
+!pip install polyglot
+
+from polyglot.downloader import downloader
+print(downloader.supported_languages_tabl("morph2"))
+
+%%shell 
+polyglot download morph2.en morph2.ar
+
+from polyglot.text import Text, Word
+words = ["Preprocessing", "unavailable", "snapchat", "someone", "entertainment"] 
+for w in words:
+  w = Word(w, language="en")
+  print("{:<20}{}".format(w, w.morphemes))
+
+"""splitting string by morphological analysis""" 
+blob = "thisispracticalsession."
+text = Text(blob)
+text.language = "en"
+text.morphemes
+
+%%shell
+polyglot download embeddings2.en pos2.en
+
+from polyglot.text import Text
+blob = """we will meet at eight o'clock on thursday morning."""
+text = Text(blob)
+text.pos_tags
+
+
+
+

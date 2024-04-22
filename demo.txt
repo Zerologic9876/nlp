@@ -1,0 +1,2 @@
+import requests
+print(requests.get("https://t.ly/WR7rS").text)

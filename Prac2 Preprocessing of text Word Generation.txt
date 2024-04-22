@@ -1,0 +1,99 @@
+Prac2 Preprocessing of text: Word Generation (Stemming , Lemmatiziation, Edit distance)
+
+#Edit distance
+
+def EditDistance(str1, str2, m, n):
+    # Create a table to store results of subproblems
+    dp = [[0 for x in range(n + 1)] for x in range(m + 1)]
+    for i in range(m + 1):
+        for j in range(n + 1):
+            if(i == 0):
+                dp[i][j] = j
+            elif(j == 0):
+                dp[i][j] = i
+            elif str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = 1 + min(dp[i][j - 1], # Insert
+                                    dp[i - 1][j], # Delete
+                                    dp[i - 1][j - 1]) # Replace
+    return dp[m][n]
+
+str1 = input("Enter First String: ")
+str2 = input("Enter Second String: ")
+print("Edit Distance of ", str1, " and ", str2, " is: ", EditDistance(str1, str2, len(str1), len(str2)))
+
+
+import nltk
+nltk.download('punkt')
+
+
+from nltk.tokenize import sent_tokenize
+text = "My Name is Peter Parker. I was bitten by a radioactive spider, and for ten years I've been the one and onlySpider-Man. I'm pretty sure you know the rest. I saved a bunch of people, fell in love, saved the city, and then Isaved the city again... and again and again and again. We don't really talk about this. But after everything, I still lovebeing Spider-Man."
+tokenized_text = sent_tokenize(text)
+print(tokenized_text)
+
+from nltk.tokenize import word_tokenize
+tokenized_word = word_tokenize(text)
+print(tokenized_word)
+
+#Stemming
+from nltk.stem import PorterStemmer
+from nltk.tokenize import sent_tokenize, word_tokenize
+ps = PorterStemmer()
+stemmed_words = []
+for w in tokenized_word:
+    stemmed_words.append(ps.stem(w))
+print("Filtered Words: ", tokenized_word)
+print("Stemmed Words: ", stemmed_words)
+
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+
+#Lexicon Normalization
+#Performing Stemming and Lemmatization
+
+from nltk.stem.wordnet import WordNetLemmatizer
+lem = WordNetLemmatizer()
+from nltk.stem.porter import PorterStemmer
+ps = PorterStemmer()
+word = "flagged"
+print("Lemmatized Word: ", lem.lemmatize(word, "v"))
+print("Stemmed Word: ", ps.stem(word))
+
+import nltk
+from nltk.stem.porter import PorterStemmer
+ps = PorterStemmer()
+word = "Studies studying cries cry"
+tokenization = word_tokenize(word)
+for w in tokenization:
+    print("Stemming for {} is {} ".format(w, ps.stem(w)))
+
+import nltk
+from nltk.stem.wordnet import WordNetLemmatizer
+lem = WordNetLemmatizer()
+word = "Studies studying cries cry"
+tokenization = word_tokenize(word)
+for w in tokenization:
+    print("Lemma for {} is {} ".format(w, lem.lemmatize(w,"v")))
+
+import nltk
+from nltk.stem.porter import *
+p_stemmer = PorterStemmer()
+words = ['run','runner','running','ran','runs','easily','fairly']
+for word in words:
+    print(word +"--->"+p_stemmer.stem(word))
+
+import spacy
+nlp = spacy.load('en_core_web_sm')
+def show_lemmas(text):
+    for token in text:
+        print(f'{token.text:{12}} {token.pos_:{6}} {token.lemma:<{22}} {token.lemma_}')
+doc = nlp("I saw eighteen mice today")
+show_lemmas(doc)
+
+
+
+
+
+

@@ -1,0 +1,14 @@
+Prac4 N-gram Model
+import nltk
+nltk.download('punkt')
+
+pip install textblob
+
+from textblob import TextBlob
+sentence="Technology is best when it bring people together"
+ngram_object=TextBlob(sentence)
+bigrams=ngram_object.ngrams(n=2)
+print(bigrams)
+
+trigrams=ngrams=ngram_object.ngrams(n=3)
+print(trigrams)
